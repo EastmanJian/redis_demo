@@ -8,8 +8,18 @@ import redis.clients.jedis.Jedis;
 import static org.junit.Assert.*;
 
 public class RedisStringsTest {
+
+    //Connection parameters
+    private String host;
+    private int port;
+    private String authPass;
+
     @Before
     public void setUp() throws Exception {
+        //initiate connection parameters
+        host = "eastmanjian.cn";
+        port = 6379;
+        authPass = "chuangqianmingyueguang";
 
     }
 
@@ -19,9 +29,12 @@ public class RedisStringsTest {
     }
 
     @Test
-    public void setGetSring() throws Exception {
-        Jedis jedis = new Jedis("eastmanjian.cn", 6379);
-        jedis.auth("chuangqianmingyueguang");
+    public void setGetString() throws Exception {
+        //Connect to Redis
+        Jedis jedis = new Jedis(host, port);
+        jedis.auth(authPass);
+
+        //Test the SET and GET command
         String status = jedis.set("jedisFoo", "jedisBar");
         assertTrue("OK".equals(status));
         String value = jedis.get("jedisFoo");
